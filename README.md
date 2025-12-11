@@ -19,6 +19,19 @@ This project implements a session management system in Laravel 12 with three mai
 - Laravel 12
 - Web server (Apache / Nginx) or PHP built-in server
 
+# ScreenShot
+
+<img width="1155" height="663" alt="image" src="https://github.com/user-attachments/assets/ca9cec66-ebef-4e51-a018-f082eda6d311" />
+
+<img width="490" height="281" alt="image" src="https://github.com/user-attachments/assets/ffe598b3-5e9e-480b-8fe3-716e9a7ba7ce" />
+
+<img width="406" height="171" alt="image" src="https://github.com/user-attachments/assets/80b7f3c3-9884-4029-b2c6-edc674775875" />
+
+<img width="491" height="158" alt="image" src="https://github.com/user-attachments/assets/1eb8b910-134d-46fb-80fe-618eecceb366" />
+
+
+
+
 ## Installation
 
 1. Clone or create the repository locally:
@@ -94,6 +107,8 @@ class SessionController extends Controller
     }
 
     // Store session data
+
+
     public function storeSessionData(Request $request)
     {
         // Example: storing a single key
@@ -133,6 +148,8 @@ use App\Http\Controllers\SessionController;
 Route::get('session/get', [SessionController::class, 'accessSessionData']);
 Route::get('session/set', [SessionController::class, 'storeSessionData']);
 Route::get('session/remove', [SessionController::class, 'deleteSessionData']);
+
+
 3) Session configuration
 Make sure .env contains:
 
@@ -230,3 +247,4 @@ If you want to display the GitHub link in README without any icon, add a plain l
 bash
 Copy code
 GitHub: https://github.com/<your-github-username>/laravel-session-demo
+
