@@ -37,8 +37,11 @@ This project implements a session management system in Laravel 12 with three mai
 1. Clone or create the repository locally:
 
 ```bash
-git clone <repository-url>
+
+git clone https://github.com/your-github-username/laravel-session-demo.gi
+
 cd laravel-session-demo
+
 Install dependencies:
 
 bash
