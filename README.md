@@ -1,59 +1,217 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PHP_Laravel12_Session
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A clean and simple Laravel 12 application demonstrating **basic session management** using Laravel’s built-in session system.
 
-## About Laravel
+This project is ideal for **learning, interviews, assignments, and quick reference**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This repository explains how Laravel 12 handles session management using three core operations:
 
-## Learning Laravel
+1. Store data in the session
+2. Retrieve data from the session
+3. Remove data from the session
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+It uses Laravel’s default **file-based session driver**, making it easy to understand without additional configuration.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* Set session data
+* Get session data
+* Remove session data
+* File-based session storage
+* Clean and minimal code structure
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Prerequisites
 
-## Contributing
+* PHP 8.1 or higher
+* Composer
+* Laravel 12
+* Apache, Nginx, or PHP built-in server
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Project Screenshots
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+<img src="https://github.com/user-attachments/assets/ca9cec66-ebef-4e51-a018-f082eda6d311" />
+<img src="https://github.com/user-attachments/assets/ffe598b3-5e9e-480b-8fe3-716e9a7ba7ce" />
+<img src="https://github.com/user-attachments/assets/80b7f3c3-9884-4029-b2c6-edc674775875" />
+<img src="https://github.com/user-attachments/assets/1eb8b910-134d-46fb-80fe-618eecceb366" />
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Installation Guide
 
-## License
+### Step 1: Clone the Repository
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+git clone https://github.com/your-github-username/laravel-session-demo.git
+cd laravel-session-demo
+```
+
+### Step 2: Install Dependencies
+
+```bash
+composer install
+```
+
+### Step 3: Environment Setup
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+---
+
+## Session Configuration
+
+Ensure the following values exist in your `.env` file:
+
+```env
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+```
+
+Session files are stored at:
+
+```
+storage/framework/sessions
+```
+
+---
+
+## Project Structure
+
+```
+laravel-session-demo/
+├── app/
+│   └── Http/
+│       └── Controllers/
+│           └── SessionController.php
+├── routes/
+│   └── web.php
+├── config/
+│   └── session.php
+├── storage/
+│   └── framework/
+│       └── sessions/
+├── .env
+├── .env.example
+└── README.md
+```
+
+---
+
+## Code Implementation
+
+### 1. Session Controller
+
+File: `app/Http/Controllers/SessionController.php`
+
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class SessionController extends Controller
+{
+    public function accessSessionData(Request $request)
+    {
+        if ($request->session()->has('my_name')) {
+            return response($request->session()->get('my_name'), 200);
+        }
+
+        return response('No data in the session', 200);
+    }
+
+    public function storeSessionData(Request $request)
+    {
+        $request->session()->put('my_name', 'Virat Gandhi');
+
+        return response('Data has been added to session', 200);
+    }
+
+    public function deleteSessionData(Request $request)
+    {
+        $request->session()->forget('my_name');
+
+        return response('Data has been removed from session.', 200);
+    }
+}
+```
+
+---
+
+### 2. Routes
+
+File: `routes/web.php`
+
+```php
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SessionController;
+
+Route::get('/session/set', [SessionController::class, 'storeSessionData']);
+Route::get('/session/get', [SessionController::class, 'accessSessionData']);
+Route::get('/session/remove', [SessionController::class, 'deleteSessionData']);
+```
+
+---
+
+## API Endpoints
+
+| Method | Endpoint        | Description           |
+| ------ | --------------- | --------------------- |
+| GET    | /session/set    | Store session data    |
+| GET    | /session/get    | Retrieve session data |
+| GET    | /session/remove | Delete session data   |
+
+---
+
+## Usage
+
+Start the development server:
+
+```bash
+php artisan serve
+```
+
+Visit the following URLs in your browser:
+
+```
+http://localhost:8000/session/set
+http://localhost:8000/session/get
+http://localhost:8000/session/remove
+```
+
+Flow:
+
+```
+/session/set → /session/get → /session/remove → /session/get
+```
+
+---
+
+## Final Notes
+
+This project is intentionally kept simple to clearly demonstrate session concepts in Laravel 12.
+
+It is perfect for:
+
+* Beginners learning Laravel sessions
+* Interview preparation
+* Academic assignments
+* Quick revision before exams
+
+You can easily extend this project to store user authentication data, shopping cart sessions, or flash messages.
