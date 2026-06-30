@@ -8,6 +8,8 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         body {
             background: #f4f6f9;
@@ -36,6 +38,78 @@
             color: #fff;
             border-radius: 12px;
             padding: 25px;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 20px;
+            padding-left: 40px;
+        }
+
+
+        .timeline:before {
+
+            content: "";
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 0;
+
+            height: 100%;
+
+            width: 3px;
+
+            background: #0d6efd;
+
+        }
+
+
+        .timeline-item {
+
+            position: relative;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .timeline-icon {
+
+            position: absolute;
+
+            left: -40px;
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 50%;
+
+            background: #0d6efd;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .timeline-content {
+
+            background: white;
+
+            padding: 20px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+
         }
 
         .footer {
@@ -93,6 +167,21 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link"
+                            href="{{ route('session.timeline') }}">
+                            Timeline
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{{ route('flash.page') }}">
+                            Flash Manager
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('session.clear') }}">
                             Clear All
                         </a>
@@ -110,21 +199,64 @@
 
         @if(session('success'))
 
-            <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show auto-hide">
 
-                {{ session('success') }}
+            <i class="bi bi-check-circle"></i>
 
-            </div>
+            {{ session('success') }}
+
+            <button class="btn-close"
+                data-bs-dismiss="alert"></button>
+
+        </div>
 
         @endif
 
+
         @if(session('error'))
 
-            <div class="alert alert-danger">
+        <div class="alert alert-danger alert-dismissible fade show auto-hide">
 
-                {{ session('error') }}
+            <i class="bi bi-x-circle"></i>
 
-            </div>
+            {{ session('error') }}
+
+            <button class="btn-close"
+                data-bs-dismiss="alert"></button>
+
+        </div>
+
+        @endif
+
+
+        @if(session('warning'))
+
+        <div class="alert alert-warning alert-dismissible fade show auto-hide">
+
+            <i class="bi bi-exclamation-triangle"></i>
+
+            {{ session('warning') }}
+
+            <button class="btn-close"
+                data-bs-dismiss="alert"></button>
+
+        </div>
+
+        @endif
+
+
+        @if(session('info'))
+
+        <div class="alert alert-info alert-dismissible fade show auto-hide">
+
+            <i class="bi bi-info-circle"></i>
+
+            {{ session('info') }}
+
+            <button class="btn-close"
+                data-bs-dismiss="alert"></button>
+
+        </div>
 
         @endif
 
@@ -139,6 +271,24 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script>
+        setTimeout(function() {
+
+            let alerts = document.querySelectorAll('.auto-hide');
+
+            alerts.forEach(function(alert) {
+
+                let bsAlert = new bootstrap.Alert(alert);
+
+                bsAlert.close();
+
+            });
+
+        }, 4000);
+    </script>
+
 
 </body>
 
