@@ -75,3 +75,26 @@ Route::get('/session/json', [SessionController::class, 'get'])
 
 Route::get('/students', [SessionController::class, 'students'])
     ->name('students');
+
+/*
+|--------------------------------------------------------------------------
+| Activity Timeline
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/session/timeline', [SessionController::class, 'timeline'])
+    ->name('session.timeline');
+
+
+/*
+|--------------------------------------------------------------------------
+| Flash Message Manager
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/flash/{type}', [SessionController::class, 'flash'])
+    ->name('flash');
+
+
+Route::get('/flash', [SessionController::class, 'flashPage'])
+    ->name('flash.page');    
