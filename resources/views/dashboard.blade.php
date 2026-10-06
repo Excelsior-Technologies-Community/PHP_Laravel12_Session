@@ -50,8 +50,41 @@
 
 {{-- ADD HERE --}}
 <div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body">
+                <h4>
+                    <i class="fa-solid fa-user-shield text-info me-2"></i>
+                    Sessions Inspector & Benchmark
+                </h4>
+                <p class="text-muted">
+                    Scan active device sessions, revoke remote tokens & benchmark session driver latency.
+                </p>
+                <a href="{{ route('session_inspector.index') }}" class="btn btn-info text-white fw-bold">
+                    Open Inspector Radar
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 mb-3">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-body">
+                <h4>
+                    <i class="fa-solid fa-cart-shopping text-warning me-2"></i>
+                    Cart & Checkout Wizard
+                </h4>
+                <p class="text-muted">
+                    Session-driven shopping cart manager, 3-step checkout wizard & JSON backup/restore.
+                </p>
+                <a href="{{ route('cart.index') }}" class="btn btn-warning text-dark fw-bold">
+                    Open Cart Wizard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
 
         <div class="card shadow">
 
@@ -80,7 +113,7 @@
     </div>
 
 
-    <div class="col-md-6">
+    <div class="col-md-6 mb-3">
 
         <div class="card shadow">
 

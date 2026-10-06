@@ -7,8 +7,8 @@
     <title>Laravel 12 Session Management</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         body {
@@ -149,6 +149,18 @@
                     </li>
 
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('session_inspector.index') }}">
+                            <i class="fa-solid fa-user-shield me-1 text-info"></i> Inspector
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('cart.index') }}">
+                            <i class="fa-solid fa-cart-shopping me-1 text-warning"></i> Cart Wizard
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('session.create') }}">
                             Add Session
                         </a>
@@ -182,7 +194,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('session.clear') }}">
+                        <a class="nav-link text-danger" href="{{ route('session.clear') }}">
                             Clear All
                         </a>
                     </li>
