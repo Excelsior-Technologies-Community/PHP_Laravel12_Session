@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Student;
 
 use Illuminate\Http\Request;
@@ -12,6 +13,18 @@ class SessionController extends Controller
     */
    public function dashboard(Request $request)
    {
+
+      if (!session()->has('dashboard_opened')) {
+
+         $this->addTimeline(
+            $request,
+            'Dashboard Opened',
+            'User viewed session dashboard.'
+         );
+
+         session()->put('dashboard_opened', true);
+      }
+
       $sessionData = $request->session()->all();
 
       return view('dashboard', [
@@ -50,8 +63,19 @@ class SessionController extends Controller
       $request->session()->put('ip_address', $request->ip());
       $request->session()->put('browser', $request->userAgent());
 
-      return redirect()->route('dashboard')
-         ->with('success', 'Session data stored successfully.');
+
+      $this->addTimeline(
+         $request,
+         'Session Created',
+         'New session data stored.'
+      );
+
+      $this->flashMessage(
+         $request,
+         'success',
+         'Session created successfully.'
+      );
+      return redirect()->route('dashboard');
    }
 
    /**
@@ -92,10 +116,28 @@ class SessionController extends Controller
 
          $request->session()->forget($key);
 
-         return back()->with('success', "$key removed successfully.");
+         $this->addTimeline(
+            $request,
+            'Session Key Deleted',
+            "$key removed from session."
+         );
+
+         $this->flashMessage(
+            $request,
+            'warning',
+            "$key removed successfully."
+         );
+
+         return back();
       }
 
-      return back()->with('error', 'Session key not found.');
+      $this->flashMessage(
+         $request,
+         'error',
+         'Session key not found.'
+      );
+
+      return back();
    }
 
    /**
@@ -105,10 +147,25 @@ class SessionController extends Controller
    {
       $request->session()->flush();
 
-      return redirect()->route('dashboard')
-         ->with('success', 'All session data cleared.');
-   }
+      $request->session()->put(
+         'activity_timeline',
+         [
+            [
+               'title' => 'Session Cleared',
+               'description' => 'All session data removed.',
+               'time' => now()->format('d M Y h:i:s A'),
+            ]
+         ]
+      );
 
+      $this->flashMessage(
+         $request,
+         'info',
+         'All session data cleared.'
+      );
+
+      return redirect()->route('dashboard');
+   }
    public function students(Request $request)
    {
       $search = $request->search;
@@ -134,5 +191,88 @@ class SessionController extends Controller
          'status' => true,
          'session' => $request->session()->all(),
       ]);
+   }
+
+   /**
+    * Store activity into session timeline
+    */
+   private function addTimeline(Request $request, $title, $description)
+   {
+      $timeline = $request->session()->get('activity_timeline', []);
+
+      array_unshift($timeline, [
+         'title' => $title,
+         'description' => $description,
+         'time' => now()->format('d M Y h:i:s A'),
+      ]);
+
+      if (count($timeline) > 20) {
+         array_pop($timeline);
+      }
+
+      $request->session()->put('activity_timeline', $timeline);
+   }
+
+   /**
+    * Store flash notification
+    */
+   private function flashMessage(Request $request, $type, $message)
+   {
+      $request->session()->flash($type, $message);
+   }
+
+   public function timeline(Request $request)
+   {
+      $timeline = $request->session()->get('activity_timeline', []);
+
+      return view('timeline', compact('timeline'));
+   }
+
+   public function flash(Request $request, $type)
+   {
+      switch ($type) {
+
+         case 'success':
+            $message = 'Profile updated successfully.';
+            break;
+
+         case 'error':
+            $message = 'Something went wrong.';
+            break;
+
+         case 'warning':
+            $message = 'Please verify your email.';
+            break;
+
+         default:
+            $message = 'Welcome back!';
+            $type = 'info';
+            break;
+      }
+
+      $this->flashMessage(
+         $request,
+         $type,
+         $message
+      );
+
+      $this->addTimeline(
+         $request,
+         ucfirst($type) . ' Flash',
+         $message
+      );
+
+      return redirect()->route('flash.page');
+   }
+
+   public function flashPage(Request $request)
+   {
+      $this->addTimeline(
+         $request,
+         'Flash Manager Opened',
+         'User opened flash message manager.'
+      );
+
+      return view('flash');
    }
 }
